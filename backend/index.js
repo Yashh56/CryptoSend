@@ -3,7 +3,6 @@ const Moralis = require("moralis").default;
 const app = express();
 const cors = require("cors");
 require("dotenv").config();
-const port = 3001;
 const ABI = require("./abi.json");
 
 app.use(cors());
@@ -21,6 +20,10 @@ function convertArrayToObject(arr) {
 
   return dataArray.reverse();
 }
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+});
 
 app.get("/getNameAndBalance", async (req, res) => {
   const { userAddress } = req.query;
@@ -88,7 +91,7 @@ app.get("/getNameAndBalance", async (req, res) => {
 Moralis.start({
   apiKey: process.env.MORALIS_KEY,
 }).then(() => {
-  app.listen(port, () => {
+  app.listen(process.env.PORT, () => {
     console.log(`Listening for API Calls`);
   });
 });
